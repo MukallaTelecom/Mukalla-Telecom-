@@ -1,15 +1,15 @@
 /* =====================================================
    إعدادات الملفات
 ===================================================== */
-const APK_LEGACY = "almukalla-telecom-android-legacy.apk";   // Android 7 → 11
-const APK_MODERN = "almukalla-telecom-android-modern.apk";   // Android 12+
+const APK_MAIN   = "almukalla-telecom-android-legacy.apk";   // Android 7 → 13
+const APK_NEW    = "almukalla-telecom-android-modern.apk";   // Android 14+
 const WEB_APP_URL = "https://almukallaw.yemoney.net/";
 
 /* =====================================================
    عناصر الصفحة
 ===================================================== */
-const oldApk   = document.getElementById("oldApk");
-const newApk   = document.getElementById("newApk");
+const oldApk   = document.getElementById("oldApk"); // تحميل التطبيق
+const newApk   = document.getElementById("newApk"); // تحميل التطبيق (إصدار جديد)
 const webApp   = document.getElementById("webApp");
 
 const loader        = document.getElementById("loader");
@@ -33,9 +33,9 @@ themeToggle.onchange = () => {
 };
 
 /* =====================================================
-   كشف نوع الجهاز (نهائي حسب طلبك)
-   - Android 7 → 11 : عادي
-   - Android 12+    : حديث
+   كشف نوع الجهاز (نهائي)
+   Android 7 → 13  : تحميل التطبيق
+   Android 14+     : تحميل التطبيق (إصدار جديد)
 ===================================================== */
 (function detectDevice(){
   const ua = navigator.userAgent;
@@ -49,14 +49,18 @@ themeToggle.onchange = () => {
   if (match) {
     const version = parseInt(match[1], 10);
 
-    if (version >= 7 && version <= 11) {
+    if (version >= 7 && version <= 13) {
       oldApk.style.display = "inline-block";
-    } else if (version >= 12) {
+      oldApk.onclick = () => downloadAPK(APK_MAIN);
+    } else if (version >= 14) {
       newApk.style.display = "inline-block";
+      newApk.onclick = () => downloadAPK(APK_NEW);
     } else {
-      // أمانًا لأي حالة نادرة
+      // أمان
       oldApk.style.display = "inline-block";
+      oldApk.onclick = () => downloadAPK(APK_MAIN);
     }
+
   } else {
     // آيفون أو كمبيوتر
     webApp.style.display = "inline-block";
@@ -65,7 +69,7 @@ themeToggle.onchange = () => {
 })();
 
 /* =====================================================
-   تحميل APK (MB/s فقط – بدون تحذير)
+   تحميل التطبيق (MB/s فقط)
 ===================================================== */
 function downloadAPK(url){
   loader.style.display = "flex";
@@ -136,4 +140,4 @@ function changeImage(step){
   if (currentImage < 0) currentImage = images.length - 1;
   if (currentImage >= images.length) currentImage = 0;
   modalImg.src = images[currentImage].src;
-     }
+}
