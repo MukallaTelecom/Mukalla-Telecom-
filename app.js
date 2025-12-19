@@ -1,8 +1,8 @@
 /* =====================================================
    إعدادات الملفات
 ===================================================== */
-const APK_LEGACY = "almukalla-telecom-android-legacy.apk";
-const APK_MODERN = "almukalla-telecom-android-modern.apk";
+const APK_LEGACY = "almukalla-telecom-android-legacy.apk";   // Android 7 → 11
+const APK_MODERN = "almukalla-telecom-android-modern.apk";   // Android 12+
 const WEB_APP_URL = "https://almukallaw.yemoney.net/";
 
 /* =====================================================
@@ -15,7 +15,6 @@ const webApp   = document.getElementById("webApp");
 const loader        = document.getElementById("loader");
 const loaderPercent = document.getElementById("loaderPercent");
 const loaderSpeed   = document.getElementById("loaderSpeed");
-const slowMsg       = document.getElementById("slowMsg");
 
 const themeToggle = document.getElementById("themeToggle");
 
@@ -34,34 +33,44 @@ themeToggle.onchange = () => {
 };
 
 /* =====================================================
-   كشف نوع الجهاز (النسخة القديمة)
+   كشف نوع الجهاز (نهائي حسب طلبك)
+   - Android 7 → 11 : عادي
+   - Android 12+    : حديث
 ===================================================== */
 (function detectDevice(){
   const ua = navigator.userAgent;
-  const android = ua.match(/Android\s([0-9\.]+)/);
+  const match = ua.match(/Android\s([0-9]+)/);
 
+  // إخفاء الكل أولاً
   oldApk.style.display =
   newApk.style.display =
   webApp.style.display = "none";
 
-  if (android) {
-    parseFloat(android[1]) >= 10
-      ? newApk.style.display = "inline-block"
-      : oldApk.style.display = "inline-block";
+  if (match) {
+    const version = parseInt(match[1], 10);
+
+    if (version >= 7 && version <= 11) {
+      oldApk.style.display = "inline-block";
+    } else if (version >= 12) {
+      newApk.style.display = "inline-block";
+    } else {
+      // أمانًا لأي حالة نادرة
+      oldApk.style.display = "inline-block";
+    }
   } else {
+    // آيفون أو كمبيوتر
     webApp.style.display = "inline-block";
     webApp.href = WEB_APP_URL;
   }
 })();
 
 /* =====================================================
-   تحميل APK (MB/s فقط + تحذير أقل من 1MB)
+   تحميل APK (MB/s فقط – بدون تحذير)
 ===================================================== */
 function downloadAPK(url){
   loader.style.display = "flex";
   loaderPercent.textContent = "0%";
   loaderSpeed.textContent = "0.00 MB/s";
-  slowMsg.style.display = "none";
 
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
@@ -81,9 +90,6 @@ function downloadAPK(url){
     const mbSpeed = bytesPerSecond / (1024 * 1024);
 
     loaderSpeed.textContent = mbSpeed.toFixed(2) + " MB/s";
-
-    // ⚠️ تحذير النت الضعيف
-    slowMsg.style.display = mbSpeed < 1 ? "block" : "none";
 
     lastLoaded = e.loaded;
     lastTime = now;
@@ -130,4 +136,4 @@ function changeImage(step){
   if (currentImage < 0) currentImage = images.length - 1;
   if (currentImage >= images.length) currentImage = 0;
   modalImg.src = images[currentImage].src;
-}
+     }
