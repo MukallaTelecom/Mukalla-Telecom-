@@ -192,6 +192,30 @@ input:checked + .switch-btn::before{
   to{transform:rotate(360deg)}
 }
 
+/* ===== سرعة التحميل ===== */
+#loaderSpeed{
+  margin-top:6px;
+  font-size:16px;
+  font-weight:600;
+  color:#fff;
+}
+
+/* ===== رسالة ضعف الإنترنت ===== */
+#slowMsg{
+  display:none;
+  margin-top:12px;
+  padding:10px 14px;
+  font-size:14px;
+  border-radius:12px;
+  background:rgba(255,193,7,.15);
+  color:#ffc107;
+  border:1px solid rgba(255,193,7,.35);
+}
+body.dark #slowMsg{
+  background:rgba(255,193,7,.2);
+  color:#ffd54f;
+}
+
 /* ================== Modal ================== */
 .image-modal{
   position:fixed;
@@ -223,13 +247,7 @@ input:checked + .switch-btn::before{
   .logo{width:70px;height:70px}
   .version{font-size:16px}
   .btn{width:90%;font-size:18px}
-  .gallery{
-    grid-template-columns:repeat(2,1fr);
-  }
-  .gallery img{
-    height:200px;
-  }
-  .circles li{
-    opacity:.15;
-  }
+  .gallery{grid-template-columns:repeat(2,1fr)}
+  .gallery img{height:200px}
+  .circles li{opacity:.15}
 }
