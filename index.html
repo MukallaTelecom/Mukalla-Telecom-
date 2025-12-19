@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الـمــكــلا تـيلـيـكـوم</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- دوائر متطايرة -->
+<ul class="circles">
+  <li></li><li></li><li></li><li></li><li></li>
+  <li></li><li></li><li></li><li></li>
+</ul>
+
+<!-- عداد التحميل -->
+<div id="loader">
+  <div class="loader-box">
+    <div class="loader-circle"></div>
+    <div id="loaderPercent">0%</div>
+    <div id="loaderSpeed">0 KB/s</div>
+    <div id="slowMsg">⚠️ سرعة الإنترنت بطيئة، الرجاء الانتظار</div>
+  </div>
+</div>
+
+<header>
+  <img src="logo.png" class="logo" alt="المكلا تيليكوم">
+
+  <div class="title">
+    <h1>الـمــكــلا تـيلـيـكـوم</h1>
+    <span class="version">الإصدار 921</span>
+  </div>
+
+  <!-- زر الوضع فاتح / داكن -->
+  <label class="switch">
+    <input type="checkbox" id="themeToggle">
+    <span class="switch-btn"></span>
+  </label>
+</header>
+
+<main>
+  <h2 class="main-title">تحميل التطبيق</h2>
+  <p class="subtitle">
+    اختر أفضل تجربة تناسب جهازك واستمتع بكامل مزايا التطبيق
+  </p>
+
+  <!-- أزرار التحميل الذكية -->
+  <div class="download-box">
+    <a id="oldApk"
+       href="javascript:void(0)"
+       class="btn"
+       onclick="downloadAPK('almukalla-telecom-android-legacy.apk')"
+       style="display:none">
+       تحميل نسخة أندرويد العادي
+    </a>
+
+    <a id="newApk"
+       href="javascript:void(0)"
+       class="btn"
+       onclick="downloadAPK('almukalla-telecom-android-modern.apk')"
+       style="display:none">
+       تحميل نسخة أندرويد الحديثة
+    </a>
+
+    <a id="webApp"
+       href="https://almukallaw.yemoney.net/"
+       class="btn"
+       target="_blank"
+       style="display:none">
+       تشغيل تطبيق الويب
+    </a>
+  </div>
+
+  <!-- صور التطبيق -->
+  <div class="gallery">
+    <img src="screen1.png" onclick="openImage(0)" alt="">
+    <img src="screen2.png" onclick="openImage(1)" alt="">
+    <img src="screen3.png" onclick="openImage(2)" alt="">
+    <img src="screen4.png" onclick="openImage(3)" alt="">
+  </div>
+
+  <div class="contact">
+    التواصل مع إدارة التطبيق<br>
+    <strong>772366133 - 774409663</strong>
+  </div>
+</main>
+
+<footer>
+  جميع الحقوق محفوظة لدى الـمــكــلا تـيلـيـكـوم © 2026
+</footer>
+
+<!-- نافذة عرض الصور -->
+<div id="imageModal" class="image-modal">
+  <span class="close-btn" onclick="closeImage()">✕</span>
+  <span class="nav prev" onclick="changeImage(-1)">‹</span>
+  <img id="modalImg" alt="">
+  <span class="nav next" onclick="changeImage(1)">›</span>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
