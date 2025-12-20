@@ -26,8 +26,8 @@
 </header>
 
 <main>
+
   <h2 class="main-title">تحميل التطبيق</h2>
-  <p class="subtitle">اختر أفضل تجربة تناسب جهازك</p>
 
   <!-- زر التحميل -->
   <button id="downloadBtn" class="btn">تحميل التطبيق</button>
@@ -37,17 +37,17 @@
     <div id="underProgress"></div>
   </div>
 
-  <!-- تحميل بنمط متجر بلاي -->
+  <!-- تحميل مثل متجر بلاي -->
   <div id="playDownload" class="play-download">
 
     <!-- الشعار + الدائرة -->
     <div class="play-logo">
-      <svg width="120" height="120">
-        <circle class="ring-bg" cx="60" cy="60" r="52"/>
-        <circle class="ring-fill" cx="60" cy="60" r="52"/>
+      <svg width="110" height="110">
+        <circle class="ring-bg" cx="55" cy="55" r="48"/>
+        <circle class="ring-fill" cx="55" cy="55" r="48"/>
       </svg>
       <img src="logo.png" alt="logo">
-      <span id="playPercent">0%</span>
+      <span id="percentText">0%</span>
     </div>
 
     <!-- كرت الملف -->
@@ -55,17 +55,25 @@
       <div class="file-name" id="fileName">almukalla-telecom.apk</div>
 
       <div class="file-line">
-        <div id="fileLineProgress"></div>
+        <div id="fileProgress"></div>
       </div>
 
       <div class="file-actions" id="fileActions">
-        <button id="pauseBtn">إيقاف</button>
-        <button id="resumeBtn">استئناف</button>
         <button id="installBtn">تثبيت</button>
         <button id="deleteBtn">حذف</button>
       </div>
     </div>
+
   </div>
+
+  <!-- صور التطبيق -->
+  <div class="gallery">
+    <img src="screen1.png">
+    <img src="screen2.png">
+    <img src="screen3.png">
+    <img src="screen4.png">
+  </div>
+
 </main>
 
 <footer>
@@ -74,4 +82,4 @@
 
 <script src="app.js"></script>
 </body>
-</html>
+    </html>
