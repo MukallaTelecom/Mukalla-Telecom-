@@ -1,10 +1,5 @@
 :root{
   --main:#2096ED;
-  --bg:#f8fbff;
-  --text:#0f172a;
-}
-
-body.dark{
   --bg:#0f172a;
   --text:#ffffff;
 }
@@ -20,10 +15,9 @@ body{
   color:var(--text);
   text-align:center;
   overflow-x:hidden;
-  transition:.4s;
 }
 
-/* ================== دوائر متطايرة ================== */
+/* دوائر متطايرة */
 .circles{
   position:fixed;
   inset:0;
@@ -31,101 +25,92 @@ body{
 }
 .circles li{
   position:absolute;
-  background:rgba(32,150,237,0.25);
+  width:60px;
+  height:60px;
+  background:rgba(32,150,237,.25);
   border-radius:50%;
-  animation:float 10s linear infinite;
+  animation:float 15s linear infinite;
   bottom:-150px;
 }
 @keyframes float{
   to{
-    transform:translateY(-1100px) rotate(360deg);
+    transform:translateY(-1200px) rotate(360deg);
     opacity:0;
   }
 }
 
-/* ================== Header ================== */
+/* Header */
 header{
   display:flex;
   align-items:center;
-  gap:18px;
+  gap:16px;
   padding:20px;
 }
 .logo{
-  width:90px;
-  height:90px;
-  border-radius:24px;
-  box-shadow:0 15px 35px rgba(32,150,237,.5);
+  width:80px;
+  height:80px;
+  border-radius:20px;
 }
-.version{
-  font-size:18px;
+
+/* Titles */
+.main-title{
+  color:var(--main);
+}
+.subtitle{
   opacity:.8;
 }
 
-/* ================== زر الوضع ================== */
-.switch{
-  margin-inline-start:auto;
-  width:48px;
-  height:26px;
-  position:relative;
-}
-.switch input{display:none}
-.switch-btn{
-  position:absolute;
-  inset:0;
-  background:#ccc;
-  border-radius:30px;
-}
-.switch-btn::before{
-  content:"";
-  position:absolute;
-  width:20px;
-  height:20px;
-  background:#fff;
-  border-radius:50%;
-  left:3px;
-  top:3px;
-  transition:.3s;
-}
-input:checked + .switch-btn{
-  background:var(--main);
-}
-input:checked + .switch-btn::before{
-  transform:translateX(22px);
-}
-
-/* ================== أزرار ================== */
+/* Buttons */
 .btn{
   display:inline-block;
   padding:16px 32px;
+  margin:10px;
   background:linear-gradient(135deg,#2096ED,#4fb4ff);
   color:#fff;
+  border:none;
   border-radius:24px;
   font-size:18px;
-  margin:10px;
-  text-decoration:none;
-  box-shadow:0 12px 30px rgba(32,150,237,.45);
-  transition:.3s;
-}
-.btn:hover{
-  transform:translateY(-4px) scale(1.05);
+  cursor:pointer;
 }
 
-/* ================== Gallery ================== */
+/* Gallery */
 .gallery{
   margin:40px auto;
+  max-width:900px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:14px;
-  max-width:800px;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:16px;
 }
 .gallery img{
   width:100%;
-  height:260px;
-  object-fit:cover;
-  border-radius:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
-  cursor:pointer;
-  transition:.3s;
+  border-radius:16px;
+}
+
+/* Loader */
+#loader{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.loader-box{
+  background:rgba(255,255,255,.1);
+  padding:30px;
+  border-radius:20px;
+}
+.loader-circle{
+  width:70px;
+  height:70px;
+  border:6px solid rgba(255,255,255,.3);
+  border-top-color:var(--main);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}  transition:.3s;
 }
 .gallery img:hover{
   transform:scale(1.05);
@@ -508,6 +493,7 @@ footer{
   .gallery{grid-template-columns:repeat(2,1fr)}
   .gallery img{height:200px}
   }
+
 
 
 
