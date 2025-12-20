@@ -1,131 +1,92 @@
-/* =====================================================
-   إعدادات الملفات
-===================================================== */
-const APK_MAIN   = "almukalla-telecom-android-legacy.apk";   // Android 7 → 13
-const APK_NEW    = "almukalla-telecom-android-modern.apk";   // Android 14+
-const WEB_APP_URL = "https://almukallaw.yemoney.net/";
+const APK_URL = "https://your-host.com/almukalla-telecom.apk"; // عدّل الرابط
 
-/* =====================================================
-   عناصر الصفحة
-===================================================== */
-const oldApk   = document.getElementById("oldApk"); // تحميل التطبيق
-const newApk   = document.getElementById("newApk"); // تحميل التطبيق (إصدار جديد)
-const webApp   = document.getElementById("webApp");
+const downloadBtn = document.getElementById("downloadBtn");
+const playBox = document.getElementById("playDownload");
+const ring = document.querySelector(".progress-ring-fill");
+const percentText = document.getElementById("playPercent");
+const fileLine = document.getElementById("fileLineProgress");
+const underProgress = document.getElementById("underProgress");
+const fileName = document.getElementById("fileName");
 
-const loader        = document.getElementById("loader");
-const loaderPercent = document.getElementById("loaderPercent");
-const loaderSpeed   = document.getElementById("loaderSpeed");
+const pauseBtn = document.getElementById("pauseBtn");
+const resumeBtn = document.getElementById("resumeBtn");
+const installBtn = document.getElementById("installBtn");
+const deleteBtn = document.getElementById("deleteBtn");
+const actions = document.getElementById("fileActions");
 
-const themeToggle = document.getElementById("themeToggle");
+let xhr = null;
+let downloadedBlob = null;
+let isPaused = false;
 
-const imageModal = document.getElementById("imageModal");
-const modalImg   = document.getElementById("modalImg");
-const images     = document.querySelectorAll(".gallery img");
+const radius = 48;
+const circumference = 2 * Math.PI * radius;
+ring.style.strokeDasharray = circumference;
+ring.style.strokeDashoffset = circumference;
 
-/* =====================================================
-   تفعيل الوضع الداكن تلقائيًا
-===================================================== */
-document.body.classList.add("dark");
-themeToggle.checked = true;
+downloadBtn.onclick = startDownload;
 
-themeToggle.onchange = () => {
-  document.body.classList.toggle("dark");
-};
+function startDownload(){
+  playBox.style.display = "block";
+  actions.style.display = "none";
+  percentText.textContent = "0%";
+  ring.style.strokeDashoffset = circumference;
+  fileLine.style.width = "0%";
+  underProgress.style.width = "0%";
+  fileName.textContent = APK_URL.split("/").pop();
+  isPaused = false;
 
-/* =====================================================
-   كشف نوع الجهاز (نهائي)
-   Android 7 → 13  : تحميل التطبيق
-   Android 14+     : تحميل التطبيق (إصدار جديد)
-===================================================== */
-(function detectDevice(){
-  const ua = navigator.userAgent;
-  const match = ua.match(/Android\s([0-9]+)/);
-
-  // إخفاء الكل أولاً
-  oldApk.style.display =
-  newApk.style.display =
-  webApp.style.display = "none";
-
-  if (match) {
-    const version = parseInt(match[1], 10);
-
-    if (version >= 7 && version <= 13) {
-      oldApk.style.display = "inline-block";
-      oldApk.onclick = () => downloadAPK(APK_MAIN);
-    } else if (version >= 14) {
-      newApk.style.display = "inline-block";
-      newApk.onclick = () => downloadAPK(APK_NEW);
-    } else {
-      // أمان
-      oldApk.style.display = "inline-block";
-      oldApk.onclick = () => downloadAPK(APK_MAIN);
-    }
-
-  } else {
-    // آيفون أو كمبيوتر
-    webApp.style.display = "inline-block";
-    webApp.href = WEB_APP_URL;
-  }
-})();
-
-/* =====================================================
-   تحميل التطبيق (MB/s فقط)
-===================================================== */
-function downloadAPK(url){
-  loader.style.display = "flex";
-  loaderPercent.textContent = "0%";
-  loaderSpeed.textContent = "0.00 MB/s";
-
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", url, true);
+  xhr = new XMLHttpRequest();
+  xhr.open("GET", APK_URL, true);
   xhr.responseType = "blob";
 
-  let lastLoaded = 0;
-  let lastTime = Date.now();
-
-  xhr.onprogress = (e) => {
-    if (!e.lengthComputable) return;
+  xhr.onprogress = (e)=>{
+    if(!e.lengthComputable || isPaused) return;
 
     const percent = Math.round((e.loaded / e.total) * 100);
-    loaderPercent.textContent = percent + "%";
+    percentText.textContent = percent + "%";
 
-    const now = Date.now();
-    const bytesPerSecond = (e.loaded - lastLoaded) / ((now - lastTime) / 1000);
-    const mbSpeed = bytesPerSecond / (1024 * 1024);
+    const offset = circumference - (percent / 100) * circumference;
+    ring.style.strokeDashoffset = offset;
 
-    loaderSpeed.textContent = mbSpeed.toFixed(2) + " MB/s";
-
-    lastLoaded = e.loaded;
-    lastTime = now;
+    fileLine.style.width = percent + "%";
+    underProgress.style.width = percent + "%";
   };
 
-  xhr.onload = () => {
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(xhr.response);
-    a.download = url.split("/").pop();
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    setTimeout(() => {
-      loader.style.display = "none";
-    }, 800);
-  };
-
-  xhr.onerror = () => {
-    alert("حدث خطأ أثناء التحميل");
-    loader.style.display = "none";
+  xhr.onload = ()=>{
+    downloadedBlob = xhr.response;
+    actions.style.display = "flex";
   };
 
   xhr.send();
 }
 
-/* =====================================================
-   معرض الصور
-===================================================== */
-let currentImage = 0;
+/* إيقاف */
+pauseBtn.onclick = ()=>{
+  if(xhr){
+    isPaused = true;
+    xhr.abort();
+  }
+};
 
-function openImage(index){
+/* استئناف (يعيد التحميل من البداية) */
+resumeBtn.onclick = ()=>{
+  startDownload();
+};
+
+/* تثبيت (فتح الملف) */
+installBtn.onclick = ()=>{
+  if(!downloadedBlob) return;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(downloadedBlob);
+  a.download = fileName.textContent;
+  a.click();
+};
+
+/* حذف */
+deleteBtn.onclick = ()=>{
+  playBox.style.display = "none";
+  downloadedBlob = null;
+};function openImage(index){
   currentImage = index;
   modalImg.src = images[index].src;
   imageModal.style.display = "flex";
@@ -141,3 +102,4 @@ function changeImage(step){
   if (currentImage >= images.length) currentImage = 0;
   modalImg.src = images[currentImage].src;
 }
+
