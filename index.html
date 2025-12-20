@@ -3,80 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>المكلا تيليكوم</title>
+<title>الـمــكــلا تـيلـيـكـوم</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
 
-<body class="dark">
+<style>
+/* ================== CSS كامل ================== */
+:root{
+  --main:#2096ED;
+  --bg:#f8fbff;
+  --text:#0f172a;
+}
+body.dark{
+  --bg:#0f172a;
+  --text:#ffffff;
+}
+*{box-sizing:border-box;font-family:'Cairo',sans-serif}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  text-align:center;
+  overflow-x:hidden;
+  transition:.4s;
+}
 
-<!-- دوائر متطايرة -->
-<ul class="circles">
-  <li></li><li></li><li></li><li></li>
-  <li></li><li></li><li></li><li></li>
-</ul>
+/* دوائر */
+.circles{position:fixed;inset:0;z-index:-1}
+.circles li{
+  position:absolute;
+  background:rgba(32,150,237,.25);
+  border-radius:50%;
+  animation:float 12s linear infinite;
+  bottom:-150px;
+}
+.circles li:nth-child(1){left:10%;width:40px;height:40px}
+.circles li:nth-child(2){left:25%;width:90px;height:90px}
+.circles li:nth-child(3){left:40%;width:30px;height:30px}
+.circles li:nth-child(4){left:60%;width:70px;height:70px}
+.circles li:nth-child(5){left:75%;width:110px;height:110px}
+.circles li:nth-child(6){left:85%;width:50px;height:50px}
+@keyframes float{to{transform:translateY(-1100px) rotate(360deg);opacity:0}}
 
-<header>
-  <img src="logo.png" class="logo" alt="logo">
-  <div class="title">
-    <h1>المكلا تيليكوم</h1>
-    <span class="version">الإصدار 921</span>
-  </div>
-</header>
+/* Header */
+header{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:25px;
+}
+.logo{
+  width:90px;height:90px;
+  border-radius:24px;
+  box-shadow:0 15px 35px rgba(32,150,237,.5);
+}
+.version{font-size:18px}
 
-<main>
-  <h2 class="main-title">تحميل التطبيق</h2>
+/* Toggle */
+.switch{margin-inline-start:auto;width:48px;height:26px;position:relative}
+.switch input{display:none}
+.switch-btn{
+  position:absolute;inset:0;
+  background:#ccc;border-radius:30px;cursor:pointer
+}
+.switch-btn::before{
+  content:"";
+  position:absolute;width:20px;height:20px;
+  background:#fff;border-radius:50%;
+  left:3px;top:3px;transition:.3s
+}
+input:checked + .switch-btn{background:var(--main)}
+input:checked + .switch-btn::before{transform:translateX(22px)}
 
-  <!-- زر التحميل -->
-  <button id="downloadBtn" class="btn">تحميل التطبيق</button>
+.main-title{font-size:28px;color:var(--main)}
+.subtitle{opacity:.75}
 
-  <!-- خط تحت الزر -->
-  <div class="under-line">
-    <div id="underProgress"></div>
-  </div>
+.btn{
+  display:inline-block;
+  padding:18px 36px;
+  background:linear-gradient(135deg,#2096ED,#4fb4ff);
+  color:#fff;
+  border-radius:26px;
+  font-size:18px;
+  margin:10px;
+  text-decoration:none;
+  box-shadow:0 12px 30px rgba(32,150,237,.45);
+  transition:.3s;
+}
+.btn:hover{transform:scale(1.07)}
 
-  <!-- تحميل بنمط متجر بلاي -->
-  <div id="playDownload" class="play-download">
+.gallery{
+  margin:50px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:20px;
+  max-width:900px;
+}
+.gallery img{
+  width:100%;
+  border-radius:22px;
+  box-shadow:0 18px 35px rgba(0,0,0,.25);
+  cursor:pointer;
+}
 
-    <!-- الشعار + الدائرة -->
-    <div class="play-logo">
-      <svg width="110" height="110">
-        <circle class="ring-bg" cx="55" cy="55" r="48"/>
-        <circle class="ring-fill" cx="55" cy="55" r="48"/>
-      </svg>
-      <img src="logo.png" alt="logo">
-      <span id="playPercent">0%</span>
-    </div>
-
-    <!-- كرت الملف -->
-    <div class="file-box">
-      <div class="file-name" id="fileName">almukalla-telecom.apk</div>
-
-      <div class="file-line">
-        <div id="fileLineProgress"></div>
-      </div>
-
-      <div class="file-actions" id="fileActions">
-        <button id="installBtn">تثبيت</button>
-        <button id="deleteBtn">حذف</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- صور التطبيق -->
-  <div class="gallery">
-    <img src="screen1.png">
-    <img src="screen2.png">
-    <img src="screen3.png">
-    <img src="screen4.png">
-  </div>
-</main>
-
-<footer>
-  جميع الحقوق محفوظة لدى المكلا تيليكوم © 2026
-</footer>
-
-<script src="app.js"></script>
-</body>
-</html>
+/* Loader */
+#loader{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  align-items:center;
+  justify
