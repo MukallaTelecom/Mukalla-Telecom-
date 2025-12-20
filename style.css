@@ -1,7 +1,6 @@
 :root{
   --main:#2096ED;
   --bg:#0f172a;
-  --card:rgba(255,255,255,.08);
   --text:#ffffff;
 }
 
@@ -18,70 +17,64 @@ body{
   overflow-x:hidden;
 }
 
-/* ================= دوائر متطايرة ================= */
+/* ===== دوائر متطايرة ===== */
 .circles{
   position:fixed;
   inset:0;
   z-index:-1;
-  overflow:hidden;
 }
-
 .circles li{
   position:absolute;
-  bottom:-150px;
-  background:rgba(32,150,237,.45);
+  list-style:none;
+  background:rgba(32,150,237,.35);
   border-radius:50%;
-  animation:floatUp 18s linear infinite;
+  animation:float 18s linear infinite;
+  bottom:-150px;
   opacity:0;
 }
+.circles li:nth-child(1){left:5%;width:30px;height:30px}
+.circles li:nth-child(2){left:15%;width:80px;height:80px}
+.circles li:nth-child(3){left:30%;width:45px;height:45px}
+.circles li:nth-child(4){left:50%;width:110px;height:110px}
+.circles li:nth-child(5){left:65%;width:35px;height:35px}
+.circles li:nth-child(6){left:75%;width:90px;height:90px}
+.circles li:nth-child(7){left:85%;width:55px;height:55px}
+.circles li:nth-child(8){left:95%;width:25px;height:25px}
 
-.circles li:nth-child(1){left:5%;width:40px;height:40px}
-.circles li:nth-child(2){left:15%;width:90px;height:90px;animation-delay:2s}
-.circles li:nth-child(3){left:30%;width:30px;height:30px;animation-delay:4s}
-.circles li:nth-child(4){left:45%;width:120px;height:120px;animation-delay:1s}
-.circles li:nth-child(5){left:60%;width:35px;height:35px;animation-delay:3s}
-.circles li:nth-child(6){left:70%;width:80px;height:80px;animation-delay:6s}
-.circles li:nth-child(7){left:85%;width:55px;height:55px;animation-delay:5s}
-.circles li:nth-child(8){left:95%;width:25px;height:25px;animation-delay:7s}
-
-@keyframes floatUp{
+@keyframes float{
   0%{transform:translateY(0);opacity:0}
   10%{opacity:1}
   100%{transform:translateY(-1200px) rotate(360deg);opacity:0}
 }
 
-/* ================= Header ================= */
+/* ===== Header ===== */
 header{
   display:flex;
   align-items:center;
   gap:16px;
   padding:20px;
 }
-
 .logo{
   width:80px;
   height:80px;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(32,150,237,.6);
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(32,150,237,.5);
 }
+.version{opacity:.8}
 
-.version{opacity:.7}
-
-/* ================= Main ================= */
+/* ===== Main ===== */
 .main-title{
   color:var(--main);
   margin-top:10px;
 }
+.subtitle{opacity:.8}
 
-.subtitle{
-  opacity:.7;
-  margin-bottom:20px;
-}
-
+/* ===== زر التحميل ===== */
 .btn{
-  padding:14px 32px;
+  margin-top:20px;
+  padding:16px 34px;
   border:none;
-  border-radius:24px;
+  border-radius:26px;
   background:linear-gradient(135deg,#2096ED,#4fb4ff);
   color:#fff;
   font-size:18px;
@@ -89,44 +82,59 @@ header{
   box-shadow:0 12px 30px rgba(32,150,237,.45);
 }
 
-/* خط تحت الزر */
-.under-line{
+/* ===== خط التحميل ===== */
+.progress-line{
   width:260px;
   height:6px;
   background:rgba(255,255,255,.2);
   border-radius:6px;
-  margin:14px auto 0;
+  margin:14px auto;
   overflow:hidden;
 }
-.under-line div{
+.progress-line div{
   width:0%;
   height:100%;
   background:var(--main);
-  transition:.2s;
+  transition:.3s;
 }
 
-/* ================= متجر بلاي ================= */
-.play-download{
+/* ===== Loader ===== */
+.loader-box{
   display:none;
-  margin:30px auto;
-  max-width:420px;
+  margin-top:10px;
+}
+.loader-circle{
+  width:60px;
+  height:60px;
+  border:6px solid rgba(255,255,255,.3);
+  border-top-color:var(--main);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto;
+}
+@keyframes spin{
+  to{transform:rotate(360deg)}
 }
 
-.play-logo{
-  position:relative;
-  width:120px;
-  margin:0 auto 16px;
+/* ===== Gallery ===== */
+.gallery{
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:16px;
+  max-width:900px;
+}
+.gallery img{
+  width:100%;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.35);
 }
 
-.play-logo img{
-  width:72px;
-  height:72px;
-  border-radius:16px;
-  position:absolute;
-  top:24px;
-  left:24px;
-  background:#fff;
-}
+/* ===== Footer ===== */
+footer{
+  margin:30px 0;
+  opacity:.7;
+}}
 
 #playPercent{
   margin-top:6px;
@@ -349,5 +357,6 @@ footer{
   .gallery{grid-template-columns:repeat(2,1fr)}
   .gallery img{height:200px}
   }
+
 
 
