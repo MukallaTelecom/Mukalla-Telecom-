@@ -18,8 +18,8 @@
 </ul>
 
 <header>
-  <img src="logo.png" class="logo" alt="logo">
-  <div>
+  <img src="logo.png" class="logo">
+  <div class="title">
     <h1>المكلا تيليكوم</h1>
     <span class="version">الإصدار 921</span>
   </div>
@@ -27,22 +27,39 @@
 
 <main>
   <h2 class="main-title">تحميل التطبيق</h2>
-  <p class="subtitle">أفضل تجربة لإدارة خدماتك بكل سهولة</p>
 
   <!-- زر التحميل -->
-  <button id="downloadBtn" class="btn">
-    تحميل التطبيق
-  </button>
+  <button id="downloadBtn" class="btn">تحميل التطبيق</button>
 
-  <!-- خط التحميل -->
-  <div class="progress-line">
-    <div id="progressFill"></div>
+  <!-- خط التحميل تحت الزر -->
+  <div class="under-line">
+    <div id="underProgress"></div>
   </div>
 
-  <!-- عداد التحميل -->
-  <div id="loaderBox" class="loader-box">
-    <div class="loader-circle"></div>
-    <span id="loaderPercent">0%</span>
+  <!-- تحميل بنمط متجر بلاي -->
+  <div id="playDownload" class="play-download">
+
+    <div class="play-logo">
+      <svg width="110" height="110">
+        <circle class="ring-bg" cx="55" cy="55" r="48"/>
+        <circle class="ring-fill" cx="55" cy="55" r="48"/>
+      </svg>
+      <img src="logo.png">
+      <span id="playPercent">0%</span>
+    </div>
+
+    <div class="file-box">
+      <div id="fileName">almukalla-telecom.apk</div>
+
+      <div class="file-line">
+        <div id="fileLineProgress"></div>
+      </div>
+
+      <div class="file-actions" id="fileActions">
+        <button id="installBtn">تثبيت</button>
+        <button id="deleteBtn">حذف</button>
+      </div>
+    </div>
   </div>
 
   <!-- صور التطبيق -->
@@ -54,8 +71,8 @@
   </div>
 
   <div class="contact">
-    للتواصل مع إدارة التطبيق<br>
-    <strong>772366133 - 774409663</strong>
+    التواصل مع الإدارة<br>
+    <strong>774409663</strong>
   </div>
 </main>
 
