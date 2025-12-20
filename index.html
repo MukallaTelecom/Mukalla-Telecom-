@@ -3,106 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الـمــكــلا تـيلـيـكـوم</title>
+<title>المكلا تيليكوم</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="dark">
 
 <!-- دوائر متطايرة -->
 <ul class="circles">
-  <li></li><li></li><li></li><li></li><li></li>
+  <li></li><li></li><li></li><li></li>
   <li></li><li></li><li></li><li></li>
 </ul>
 
-<!-- عداد التحميل -->
-<div id="loader">
-  <div class="loader-box">
-    <div class="loader-circle"></div>
-    <div id="loaderPercent">0%</div>
-    <div id="loaderSpeed">0 KB/s</div>
-    <div id="slowMsg">المكلاء تيليكوم الاصدار 921</div>
-  </div>
-</div>
-
 <header>
-  <img src="logo.png" class="logo" alt="المكلا تيليكوم">
-
+  <img src="logo.png" class="logo" alt="logo">
   <div class="title">
-    <h1> المكلا تيليكوم</h1>
+    <h1>المكلا تيليكوم</h1>
     <span class="version">الإصدار 921</span>
   </div>
-
-  <!-- زر الوضع فاتح / داكن -->
-  <label class="switch">
-    <input type="checkbox" id="themeToggle">
-    <span class="switch-btn"></span>
-  </label>
 </header>
 
 <main>
   <h2 class="main-title">تحميل التطبيق</h2>
-  <p class="subtitle">
-    اختر أفضل تجربة تناسب جهازك واستمتع بكامل مزايا التطبيق
-  </p>
 
-  <!-- أزرار التحميل الذكية -->
-  <div class="download-box">
-    <a id="oldApk"
-       href="javascript:void(0)"
-       class="btn"
-       onclick="downloadAPK('almukalla-telecom-android-legacy.apk')"
-       style="display:none">
-       تحميل التطبيق
-    </a>
+  <!-- زر التحميل -->
+  <button id="downloadBtn" class="btn">تحميل التطبيق</button>
 
-    <a id="newApk"
-       href="javascript:void(0)"
-       class="btn"
-       onclick="downloadAPK('almukalla-telecom-android-modern.apk')"
-       style="display:none">
-       تحميل التطبيق (الاصدار الجديد)
-    </a>
-
-    <a id="webApp"
-       href="https://almukallaw.yemoney.net/"
-       class="btn"
-       target="_blank"
-       style="display:none">
-       تشغيل تطبيق الويب
-    </a>
+  <!-- خط التحميل تحت الزر -->
+  <div class="under-line">
+    <div id="underProgress"></div>
   </div>
 
-  <!-- صور التطبيق -->
-  <div class="gallery">
-    <img src="screen1.png" onclick="openImage(0)" alt="">
-    <img src="screen2.png" onclick="openImage(1)" alt="">
-    <img src="screen3.png" onclick="openImage(2)" alt="">
-    <img src="screen4.png" onclick="openImage(3)" alt="">
-  </div>
+  <!-- تحميل بنمط متجر بلاي -->
+  <div id="playDownload" class="play-download">
 
-  <div class="contact">
-    التواصل مع إدارة التطبيق<br>
-    <strong>772366133 - 774409663</strong>
+    <!-- الشعار + الدائرة -->
+    <div class="play-logo">
+      <svg class="progress-ring" width="110" height="110">
+        <circle class="progress-ring-bg" r="48" cx="55" cy="55"/>
+        <circle class="progress-ring-fill" r="48" cx="55" cy="55"/>
+      </svg>
+      <img src="logo.png" alt="logo">
+      <span id="playPercent">0%</span>
+    </div>
+
+    <!-- كرت الملف -->
+    <div class="file-box">
+      <div class="file-name" id="fileName">almukalla-telecom.apk</div>
+
+      <div class="file-line">
+        <div id="fileLineProgress"></div>
+      </div>
+
+      <div class="file-actions" id="fileActions">
+        <button id="pauseBtn">إيقاف</button>
+        <button id="resumeBtn">استئناف</button>
+        <button id="installBtn">تثبيت</button>
+        <button id="deleteBtn">حذف</button>
+      </div>
+    </div>
+
   </div>
 </main>
 
-<footer>
- © جميع الحقوق محفوظة لدى الـمــكــلا تـيلـيـكـوم  2026
-</footer>
-
-<!-- نافذة عرض الصور -->
-<div id="imageModal" class="image-modal">
-  <span class="close-btn" onclick="closeImage()">✕</span>
-  <span class="nav prev" onclick="changeImage(-1)">‹</span>
-  <img id="modalImg" alt="">
-  <span class="nav next" onclick="changeImage(1)">›</span>
-</div>
-
 <script src="app.js"></script>
 </body>
-
 </html>
-
