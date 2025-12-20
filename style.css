@@ -1,10 +1,5 @@
 :root{
   --main:#2096ED;
-  --bg:#f8fbff;
-  --text:#0f172a;
-}
-
-body.dark{
   --bg:#0f172a;
   --text:#ffffff;
 }
@@ -20,112 +15,181 @@ body{
   color:var(--text);
   text-align:center;
   overflow-x:hidden;
-  transition:.4s;
 }
 
 /* ================== دوائر متطايرة ================== */
 .circles{
   position:fixed;
   inset:0;
+  overflow:hidden;
   z-index:-1;
 }
+
 .circles li{
   position:absolute;
-  background:rgba(32,150,237,0.25);
+  list-style:none;
+  width:40px;
+  height:40px;
+  background:rgba(32,150,237,0.45);
   border-radius:50%;
-  animation:float 10s linear infinite;
+  animation:floatUp 18s linear infinite;
   bottom:-150px;
+  opacity:0;
 }
-@keyframes float{
-  to{
-    transform:translateY(-1100px) rotate(360deg);
-    opacity:0;
-  }
+
+.circles li:nth-child(1){left:5%;width:30px;height:30px}
+.circles li:nth-child(2){left:15%;width:80px;height:80px;animation-delay:2s}
+.circles li:nth-child(3){left:30%;width:45px;height:45px;animation-delay:4s}
+.circles li:nth-child(4){left:50%;width:110px;height:110px;animation-delay:1s}
+.circles li:nth-child(5){left:65%;width:35px;height:35px;animation-delay:3s}
+.circles li:nth-child(6){left:75%;width:90px;height:90px;animation-delay:6s}
+.circles li:nth-child(7){left:85%;width:55px;height:55px;animation-delay:5s}
+.circles li:nth-child(8){left:95%;width:25px;height:25px;animation-delay:7s}
+
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(0.6);opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(-1200px) scale(1.1) rotate(360deg);opacity:0}
 }
 
 /* ================== Header ================== */
 header{
   display:flex;
   align-items:center;
-  gap:18px;
+  gap:16px;
   padding:20px;
 }
+
 .logo{
-  width:90px;
-  height:90px;
-  border-radius:24px;
-  box-shadow:0 15px 35px rgba(32,150,237,.5);
-}
-.version{
-  font-size:18px;
-  opacity:.8;
+  width:80px;
+  height:80px;
+  border-radius:20px;
 }
 
-/* ================== زر الوضع ================== */
-.switch{
-  margin-inline-start:auto;
-  width:48px;
-  height:26px;
-  position:relative;
-}
-.switch input{display:none}
-.switch-btn{
-  position:absolute;
-  inset:0;
-  background:#ccc;
-  border-radius:30px;
-}
-.switch-btn::before{
-  content:"";
-  position:absolute;
-  width:20px;
-  height:20px;
-  background:#fff;
-  border-radius:50%;
-  left:3px;
-  top:3px;
-  transition:.3s;
-}
-input:checked + .switch-btn{
-  background:var(--main);
-}
-input:checked + .switch-btn::before{
-  transform:translateX(22px);
-}
+.version{opacity:.7}
 
-/* ================== أزرار ================== */
+/* ================== زر التحميل ================== */
+.main-title{color:var(--main)}
+
 .btn{
-  display:inline-block;
-  padding:16px 32px;
+  margin-top:20px;
+  padding:14px 30px;
+  border:none;
+  border-radius:24px;
   background:linear-gradient(135deg,#2096ED,#4fb4ff);
   color:#fff;
-  border-radius:24px;
   font-size:18px;
-  margin:10px;
-  text-decoration:none;
-  box-shadow:0 12px 30px rgba(32,150,237,.45);
-  transition:.3s;
-}
-.btn:hover{
-  transform:translateY(-4px) scale(1.05);
+  cursor:pointer;
 }
 
-/* ================== Gallery ================== */
-.gallery{
-  margin:40px auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:14px;
-  max-width:800px;
+/* خط تحت الزر */
+.under-line{
+  width:260px;
+  height:6px;
+  background:rgba(255,255,255,.2);
+  border-radius:6px;
+  margin:12px auto 0;
+  overflow:hidden;
 }
-.gallery img{
-  width:100%;
-  height:260px;
-  object-fit:cover;
-  border-radius:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
+.under-line div{
+  height:100%;
+  width:0%;
+  background:var(--main);
+  transition:.2s;
+}
+
+/* ================== نمط متجر بلاي ================== */
+.play-download{
+  display:none;
+  margin:30px auto;
+  max-width:420px;
+}
+
+.play-logo{
+  position:relative;
+  width:110px;
+  margin:0 auto 14px;
+}
+
+.play-logo img{
+  width:70px;
+  height:70px;
+  border-radius:16px;
+  position:absolute;
+  top:20px;
+  left:20px;
+  background:#fff;
+}
+
+#playPercent{
+  display:block;
+  margin-top:6px;
+  color:var(--main);
+  font-weight:600;
+}
+
+.progress-ring-bg{
+  fill:none;
+  stroke:rgba(255,255,255,.25);
+  stroke-width:6;
+}
+
+.progress-ring-fill{
+  fill:none;
+  stroke:var(--main);
+  stroke-width:6;
+  stroke-dasharray:302;
+  stroke-dashoffset:302;
+  transform:rotate(-90deg);
+  transform-origin:50% 50%;
+  transition:.25s;
+}
+
+/* كرت الملف */
+.file-box{
+  background:rgba(255,255,255,.08);
+  padding:14px;
+  border-radius:16px;
+}
+
+.file-name{
+  font-size:14px;
+  margin-bottom:8px;
+}
+
+.file-line{
+  height:6px;
+  background:rgba(255,255,255,.2);
+  border-radius:6px;
+  overflow:hidden;
+}
+.file-line div{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#2096ED,#4fb4ff);
+  transition:.2s;
+}
+
+.file-actions{
+  display:none;
+  gap:8px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+.file-actions button{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:12px;
+  color:#fff;
   cursor:pointer;
-  transition:.3s;
+}
+
+#pauseBtn{background:#f59e0b}
+#resumeBtn{background:#10b981}
+#installBtn{background:#2096ED}
+#deleteBtn{background:#ef4444}  transition:.3s;
 }
 .gallery img:hover{
   transform:scale(1.05);
@@ -200,3 +264,4 @@ input:checked + .switch-btn::before{
   .gallery{grid-template-columns:repeat(2,1fr)}
   .gallery img{height:200px}
   }
+
