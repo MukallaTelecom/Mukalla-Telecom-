@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="dark">
+<body>
 
 <!-- دوائر متطايرة -->
 <ul class="circles">
@@ -18,29 +18,29 @@
 </ul>
 
 <header>
-  <img src="logo.png" class="logo" alt="logo">
+  <img src="logo.png" class="logo">
 
   <div class="title">
     <h1>المكلا تيليكوم</h1>
     <span class="version">الإصدار 921</span>
   </div>
+
+  <!-- زر الوضع -->
+  <label class="switch">
+    <input type="checkbox" id="themeToggle">
+    <span class="switch-btn"></span>
+  </label>
 </header>
 
 <main>
   <h2 class="main-title">تحميل التطبيق</h2>
   <p class="subtitle">سيتم اختيار النسخة المناسبة تلقائيًا</p>
 
-  <!-- أزرار التحميل -->
   <div class="download-box">
-    <button id="oldApk" class="btn" style="display:none">
-      تحميل التطبيق
-    </button>
+    <a id="apkBtn" class="btn" style="display:none">تحميل التطبيق</a>
 
-    <button id="newApk" class="btn" style="display:none">
-      تحميل التطبيق (إصدار جديد)
-    </button>
-
-    <a id="webApp" class="btn" target="_blank" style="display:none">
+    <a id="webApp" class="btn" href="https://almukallaw.yemoney.net/"
+       target="_blank" style="display:none">
       تشغيل تطبيق الويب
     </a>
   </div>
@@ -54,24 +54,14 @@
   </div>
 
   <div class="contact">
-    التواصل مع إدارة التطبيق<br>
-    <strong>772366133 - 774409663</strong>
+    التواصل: <strong>774409663</strong>
   </div>
 </main>
 
 <footer>
-  جميع الحقوق محفوظة لدى المكلا تيليكوم © 2026
+  جميع الحقوق محفوظة © المكلا تيليكوم 2026
 </footer>
-
-<!-- شاشة التحميل -->
-<div id="loader">
-  <div class="loader-box">
-    <div class="loader-circle"></div>
-    <div id="loaderPercent">0%</div>
-    <div id="loaderSpeed">0.00 MB/s</div>
-  </div>
-</div>
 
 <script src="app.js"></script>
 </body>
-</html>
+  </html>
