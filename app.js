@@ -1,131 +1,73 @@
-/* =====================================================
-   إعدادات الملفات
-===================================================== */
-const APK_MAIN   = "almukalla-telecom-android-legacy.apk";   // Android 7 → 13
-const APK_NEW    = "almukalla-telecom-android-modern.apk";   // Android 14+
-const WEB_APP_URL = "https://almukallaw.yemoney.net/";
+const APK_MAIN = "almukalla-telecom-android-legacy.apk";
+const APK_NEW  = "almukalla-telecom-android-modern.apk";
+const WEB_APP  = "https://almukallaw.yemoney.net/";
 
-/* =====================================================
-   عناصر الصفحة
-===================================================== */
-const oldApk   = document.getElementById("oldApk"); // تحميل التطبيق
-const newApk   = document.getElementById("newApk"); // تحميل التطبيق (إصدار جديد)
-const webApp   = document.getElementById("webApp");
+const oldBtn = document.getElementById("oldApk");
+const newBtn = document.getElementById("newApk");
+const webBtn = document.getElementById("webApp");
 
-const loader        = document.getElementById("loader");
-const loaderPercent = document.getElementById("loaderPercent");
-const loaderSpeed   = document.getElementById("loaderSpeed");
+const loader = document.getElementById("loader");
+const percent = document.getElementById("loaderPercent");
+const speedEl = document.getElementById("loaderSpeed");
 
-const themeToggle = document.getElementById("themeToggle");
-
-const imageModal = document.getElementById("imageModal");
-const modalImg   = document.getElementById("modalImg");
-const images     = document.querySelectorAll(".gallery img");
-
-/* =====================================================
-   تفعيل الوضع الداكن تلقائيًا
-===================================================== */
-document.body.classList.add("dark");
-themeToggle.checked = true;
-
-themeToggle.onchange = () => {
-  document.body.classList.toggle("dark");
-};
-
-/* =====================================================
-   كشف نوع الجهاز (نهائي)
-   Android 7 → 13  : تحميل التطبيق
-   Android 14+     : تحميل التطبيق (إصدار جديد)
-===================================================== */
-(function detectDevice(){
+/* كشف الجهاز */
+(function(){
   const ua = navigator.userAgent;
-  const match = ua.match(/Android\s([0-9]+)/);
+  const m = ua.match(/Android\s([0-9]+)/);
 
-  // إخفاء الكل أولاً
-  oldApk.style.display =
-  newApk.style.display =
-  webApp.style.display = "none";
-
-  if (match) {
-    const version = parseInt(match[1], 10);
-
-    if (version >= 7 && version <= 13) {
-      oldApk.style.display = "inline-block";
-      oldApk.onclick = () => downloadAPK(APK_MAIN);
-    } else if (version >= 14) {
-      newApk.style.display = "inline-block";
-      newApk.onclick = () => downloadAPK(APK_NEW);
-    } else {
-      // أمان
-      oldApk.style.display = "inline-block";
-      oldApk.onclick = () => downloadAPK(APK_MAIN);
+  if(m){
+    const v = parseInt(m[1]);
+    if(v >= 14){
+      newBtn.style.display = "inline-block";
+    }else{
+      oldBtn.style.display = "inline-block";
     }
-
-  } else {
-    // آيفون أو كمبيوتر
-    webApp.style.display = "inline-block";
-    webApp.href = WEB_APP_URL;
+  }else{
+    webBtn.style.display = "inline-block";
+    webBtn.href = WEB_APP;
   }
 })();
 
-/* =====================================================
-   تحميل التطبيق (MB/s فقط)
-===================================================== */
+/* تحميل */
 function downloadAPK(url){
   loader.style.display = "flex";
-  loaderPercent.textContent = "0%";
-  loaderSpeed.textContent = "0.00 MB/s";
+  percent.textContent = "0%";
+  speedEl.textContent = "0.00 MB/s";
 
   const xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
   xhr.responseType = "blob";
 
-  let lastLoaded = 0;
   let lastTime = Date.now();
+  let lastLoaded = 0;
 
-  xhr.onprogress = (e) => {
-    if (!e.lengthComputable) return;
+  xhr.onprogress = (e)=>{
+    if(!e.lengthComputable) return;
 
-    const percent = Math.round((e.loaded / e.total) * 100);
-    loaderPercent.textContent = percent + "%";
+    const p = Math.round((e.loaded / e.total) * 100);
+    percent.textContent = p + "%";
 
     const now = Date.now();
-    const bytesPerSecond = (e.loaded - lastLoaded) / ((now - lastTime) / 1000);
-    const mbSpeed = bytesPerSecond / (1024 * 1024);
-
-    loaderSpeed.textContent = mbSpeed.toFixed(2) + " MB/s";
+    const speed = (e.loaded - lastLoaded) / ((now - lastTime)/1000);
+    speedEl.textContent = (speed / (1024*1024)).toFixed(2) + " MB/s";
 
     lastLoaded = e.loaded;
     lastTime = now;
   };
 
-  xhr.onload = () => {
+  xhr.onload = ()=>{
     const a = document.createElement("a");
     a.href = URL.createObjectURL(xhr.response);
-    a.download = url.split("/").pop();
-    document.body.appendChild(a);
+    a.download = url;
     a.click();
-    document.body.removeChild(a);
-
-    setTimeout(() => {
-      loader.style.display = "none";
-    }, 800);
-  };
-
-  xhr.onerror = () => {
-    alert("حدث خطأ أثناء التحميل");
     loader.style.display = "none";
   };
 
   xhr.send();
 }
 
-/* =====================================================
-   معرض الصور
-===================================================== */
-let currentImage = 0;
-
-function openImage(index){
+oldBtn.onclick = ()=>downloadAPK(APK_MAIN);
+newBtn.onclick = ()=>downloadAPK(APK_NEW);function openImage(index){
   currentImage = index;
   modalImg.src = images[index].src;
   imageModal.style.display = "flex";
@@ -141,3 +83,4 @@ function changeImage(step){
   if (currentImage >= images.length) currentImage = 0;
   modalImg.src = images[currentImage].src;
 }
+
