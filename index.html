@@ -27,11 +27,12 @@
 
 <main>
   <h2 class="main-title">تحميل التطبيق</h2>
+  <p class="subtitle">اختر أفضل تجربة تناسب جهازك</p>
 
   <!-- زر التحميل -->
   <button id="downloadBtn" class="btn">تحميل التطبيق</button>
 
-  <!-- خط التحميل تحت الزر -->
+  <!-- خط تحميل تحت الزر -->
   <div class="under-line">
     <div id="underProgress"></div>
   </div>
@@ -41,9 +42,9 @@
 
     <!-- الشعار + الدائرة -->
     <div class="play-logo">
-      <svg class="progress-ring" width="110" height="110">
-        <circle class="progress-ring-bg" r="48" cx="55" cy="55"/>
-        <circle class="progress-ring-fill" r="48" cx="55" cy="55"/>
+      <svg width="120" height="120">
+        <circle class="ring-bg" cx="60" cy="60" r="52"/>
+        <circle class="ring-fill" cx="60" cy="60" r="52"/>
       </svg>
       <img src="logo.png" alt="logo">
       <span id="playPercent">0%</span>
@@ -64,9 +65,12 @@
         <button id="deleteBtn">حذف</button>
       </div>
     </div>
-
   </div>
 </main>
+
+<footer>
+  جميع الحقوق محفوظة © المكلا تيليكوم 2026
+</footer>
 
 <script src="app.js"></script>
 </body>
