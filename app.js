@@ -1,86 +1,39 @@
-const APK_MAIN = "almukalla-telecom-android-legacy.apk";
-const APK_NEW  = "almukalla-telecom-android-modern.apk";
-const WEB_APP  = "https://almukallaw.yemoney.net/";
+const APK_URL = "almukalla-telecom.apk";
+const WEB_APP_URL = "https://almukallaw.yemoney.net/";
 
-const oldBtn = document.getElementById("oldApk");
-const newBtn = document.getElementById("newApk");
-const webBtn = document.getElementById("webApp");
+const apkBtn = document.getElementById("apkBtn");
+const webApp = document.getElementById("webApp");
+const themeToggle = document.getElementById("themeToggle");
 
-const loader = document.getElementById("loader");
-const percent = document.getElementById("loaderPercent");
-const speedEl = document.getElementById("loaderSpeed");
+/* داكن تلقائي */
+document.body.classList.add("dark");
+themeToggle.checked = true;
 
-/* كشف الجهاز */
-(function(){
-  const ua = navigator.userAgent;
-  const m = ua.match(/Android\s([0-9]+)/);
+themeToggle.onchange = ()=>{
+  document.body.classList.toggle("dark");
+};
 
-  if(m){
-    const v = parseInt(m[1]);
-    if(v >= 14){
-      newBtn.style.display = "inline-block";
-    }else{
-      oldBtn.style.display = "inline-block";
-    }
-  }else{
-    webBtn.style.display = "inline-block";
-    webBtn.href = WEB_APP;
+/* كاشف الجهاز */
+(function detectDevice(){
+  const ua = navigator.userAgent.toLowerCase();
+
+  apkBtn.style.display = "none";
+  webApp.style.display = "none";
+
+  if (ua.includes("android")) {
+    apkBtn.style.display = "inline-block";
+    apkBtn.onclick = ()=> downloadAPK(APK_URL);
+  } else {
+    webApp.style.display = "inline-block";
   }
 })();
 
-/* تحميل */
+/* تحميل بسيط مستقر */
 function downloadAPK(url){
-  loader.style.display = "flex";
-  percent.textContent = "0%";
-  speedEl.textContent = "0.00 MB/s";
-
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", url, true);
-  xhr.responseType = "blob";
-
-  let lastTime = Date.now();
-  let lastLoaded = 0;
-
-  xhr.onprogress = (e)=>{
-    if(!e.lengthComputable) return;
-
-    const p = Math.round((e.loaded / e.total) * 100);
-    percent.textContent = p + "%";
-
-    const now = Date.now();
-    const speed = (e.loaded - lastLoaded) / ((now - lastTime)/1000);
-    speedEl.textContent = (speed / (1024*1024)).toFixed(2) + " MB/s";
-
-    lastLoaded = e.loaded;
-    lastTime = now;
-  };
-
-  xhr.onload = ()=>{
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(xhr.response);
-    a.download = url;
-    a.click();
-    loader.style.display = "none";
-  };
-
-  xhr.send();
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
-
-oldBtn.onclick = ()=>downloadAPK(APK_MAIN);
-newBtn.onclick = ()=>downloadAPK(APK_NEW);function openImage(index){
-  currentImage = index;
-  modalImg.src = images[index].src;
-  imageModal.style.display = "flex";
-}
-
-function closeImage(){
-  imageModal.style.display = "none";
-}
-
-function changeImage(step){
-  currentImage += step;
-  if (currentImage < 0) currentImage = images.length - 1;
-  if (currentImage >= images.length) currentImage = 0;
-  modalImg.src = images[currentImage].src;
-}
-
