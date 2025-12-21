@@ -20,10 +20,21 @@
 <!-- عداد التحميل -->
 <div id="loader">
   <div class="loader-box">
-    <div class="loader-circle"></div>
+
+    <!-- دائرة التحميل -->
+    <div class="loader-circle-wrapper">
+      <div class="loader-circle"></div>
+
+      <!-- شعار التطبيق في الوسط -->
+      <img src="logo.png" class="loader-logo" alt="logo">
+    </div>
+
     <div id="loaderPercent">0%</div>
-    <div id="loaderSpeed">0 KB/s</div>
+    <div id="loaderSpeed">0 MB/s</div>
+
+    <!-- رسالة بطء الإنترنت -->
     <div id="slowMsg">⚠️ سرعة الإنترنت بطيئة، الرجاء الانتظار</div>
+
   </div>
 </div>
 
@@ -104,3 +115,4 @@
 <script src="app.js"></script>
 </body>
 </html>
+
