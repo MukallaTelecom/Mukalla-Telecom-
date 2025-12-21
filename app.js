@@ -1,39 +1,83 @@
-const APK_URL = "almukalla-telecom.apk";
-const WEB_APP_URL = "https://almukallaw.yemoney.net/";
+const VERSION = "921";
 
-const apkBtn = document.getElementById("apkBtn");
-const webApp = document.getElementById("webApp");
-const themeToggle = document.getElementById("themeToggle");
+const APK_MAIN = "almukalla-telecom.apk";
+const APK_MODERN = "almukalla-telecom-modern.apk";
+const WEB_URL = "https://almukallaw.yemoney.net/";
 
-/* داكن تلقائي */
-document.body.classList.add("dark");
-themeToggle.checked = true;
+const btn = document.getElementById("downloadBtn");
+const webBtn = document.getElementById("webBtn");
+const progressBox = document.getElementById("progressBox");
+const progressFill = document.getElementById("progressFill");
+const progressPercent = document.getElementById("progressPercent");
+const logo = document.getElementById("appLogo");
+const fileNameEl = document.getElementById("fileName");
 
-themeToggle.onchange = ()=>{
-  document.body.classList.toggle("dark");
-};
+const images = document.querySelectorAll(".gallery img");
+const modal = document.getElementById("imageModal");
+const modalImg = document.getElementById("modalImg");
 
-/* كاشف الجهاز */
-(function detectDevice(){
-  const ua = navigator.userAgent.toLowerCase();
+let selectedAPK = APK_MAIN;
 
-  apkBtn.style.display = "none";
-  webApp.style.display = "none";
+/* كشف الجهاز */
+(function(){
+  const ua = navigator.userAgent;
+  const match = ua.match(/Android\s([0-9]+)/);
 
-  if (ua.includes("android")) {
-    apkBtn.style.display = "inline-block";
-    apkBtn.onclick = ()=> downloadAPK(APK_URL);
-  } else {
-    webApp.style.display = "inline-block";
+  if(match){
+    const v = parseInt(match[1]);
+    selectedAPK = v >= 14 ? APK_MODERN : APK_MAIN;
+    fileNameEl.textContent = selectedAPK;
+  }else{
+    btn.style.display = "none";
+    webBtn.style.display = "inline-block";
+    webBtn.href = WEB_URL;
   }
 })();
 
-/* تحميل بسيط مستقر */
-function downloadAPK(url){
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = url;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+/* تحميل */
+btn.onclick = ()=>{
+  if(localStorage.getItem("downloaded_"+VERSION)){
+    alert("هذا الإصدار تم تحميله مسبقًا");
+    return;
+  }
+
+  progressBox.style.display = "block";
+  logo.classList.add("loading");
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", selectedAPK, true);
+  xhr.responseType = "blob";
+
+  xhr.onprogress = (e)=>{
+    const p = Math.round((e.loaded/e.total)*100);
+    progressFill.style.width = p+"%";
+    progressPercent.textContent = p+"%";
+  };
+
+  xhr.onload = ()=>{
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(xhr.response);
+    a.download = selectedAPK;
+    a.click();
+
+    localStorage.setItem("downloaded_"+VERSION,"yes");
+    logo.classList.remove("loading");
+  };
+
+  xhr.send();
+};
+
+/* معرض الصور */
+function openImage(i){
+  modal.style.display="flex";
+  modalImg.src = images[i].src;
 }
+function closeImage(){
+  modal.style.display="none";
+}
+
+/* وضع داكن */
+const toggle = document.getElementById("themeToggle");
+toggle.onchange = ()=>{
+  document.body.classList.toggle("dark");
+};
