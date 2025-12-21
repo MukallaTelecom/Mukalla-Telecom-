@@ -3,95 +3,104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>المكلا تيليكوم</title>
+<title>الـمــكــلا تـيلـيـكـوم</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="dark">
+<body>
 
 <!-- دوائر متطايرة -->
 <ul class="circles">
   <li></li><li></li><li></li><li></li><li></li>
-  <li></li><li></li><li></li>
+  <li></li><li></li><li></li><li></li>
 </ul>
 
-<header>
-  <div class="logo-wrap">
-    <img src="logo.png" class="logo" id="appLogo">
+<!-- عداد التحميل -->
+<div id="loader">
+  <div class="loader-box">
+    <div class="loader-circle"></div>
+    <div id="loaderPercent">0%</div>
+    <div id="loaderSpeed">0 KB/s</div>
+    <div id="slowMsg">⚠️ سرعة الإنترنت بطيئة، الرجاء الانتظار</div>
   </div>
+</div>
+
+<header>
+  <img src="logo.png" class="logo" alt="المكلا تيليكوم">
 
   <div class="title">
-    <h1>المكلا تيليكوم</h1>
-    <span class="version">الإصدار <strong id="appVersion">921</strong></span>
+    <h1> المكلا تيليكوم</h1>
+    <span class="version">الإصدار 921</span>
   </div>
 
-  <!-- زر الوضع -->
+  <!-- زر الوضع فاتح / داكن -->
   <label class="switch">
-    <input type="checkbox" id="themeToggle" checked>
+    <input type="checkbox" id="themeToggle">
     <span class="switch-btn"></span>
   </label>
 </header>
 
 <main>
-  <h2>تحميل التطبيق</h2>
-  <p id="deviceText">سيتم اختيار النسخة المناسبة تلقائيًا</p>
+  <h2 class="main-title">تحميل التطبيق</h2>
+  <p class="subtitle">
+    اختر أفضل تجربة تناسب جهازك واستمتع بكامل مزايا التطبيق
+  </p>
 
-  <!-- زر ذكي -->
-  <button id="downloadBtn" class="btn">
-    تحميل التطبيق
-  </button>
+  <!-- أزرار التحميل الذكية -->
+  <div class="download-box">
+    <a id="oldApk"
+       href="javascript:void(0)"
+       class="btn"
+       onclick="downloadAPK('almukalla-telecom-android-legacy.apk')"
+       style="display:none">
+       تحميل نسخة أندرويد العادي
+    </a>
 
-  <!-- عداد تحميل -->
-  <div id="progressBox" class="progress-box">
-    <div class="progress-bar">
-      <div id="progressFill"></div>
-    </div>
-    <span id="progressPercent">0%</span>
+    <a id="newApk"
+       href="javascript:void(0)"
+       class="btn"
+       onclick="downloadAPK('almukalla-telecom-android-modern.apk')"
+       style="display:none">
+       تحميل نسخة أندرويد الحديثة
+    </a>
+
+    <a id="webApp"
+       href="https://almukallaw.yemoney.net/"
+       class="btn"
+       target="_blank"
+       style="display:none">
+       تشغيل تطبيق الويب
+    </a>
   </div>
-
-  <!-- بطاقة معلومات -->
-  <div class="info-card">
-    <div class="android-icon">🤖</div>
-    <div class="info-text">
-      <div id="fileName">almukalla-telecom.apk</div>
-      <div class="meta">
-        <span>الإصدار: 921</span> •
-        <span id="fileSize">— MB</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- زر الويب -->
-  <a id="webBtn" class="btn web-btn" target="_blank">
-    تشغيل تطبيق الويب
-  </a>
 
   <!-- صور التطبيق -->
   <div class="gallery">
-    <img src="screen1.png" onclick="openImage(0)">
-    <img src="screen2.png" onclick="openImage(1)">
-    <img src="screen3.png" onclick="openImage(2)">
-    <img src="screen4.png" onclick="openImage(3)">
+    <img src="screen1.png" onclick="openImage(0)" alt="">
+    <img src="screen2.png" onclick="openImage(1)" alt="">
+    <img src="screen3.png" onclick="openImage(2)" alt="">
+    <img src="screen4.png" onclick="openImage(3)" alt="">
   </div>
 
   <div class="contact">
-    التواصل: <strong>774409663</strong>
+    التواصل مع إدارة التطبيق<br>
+    <strong>772366133 - 774409663</strong>
   </div>
 </main>
 
 <footer>
-  جميع الحقوق محفوظة © المكلا تيليكوم 2026
+ © جميع الحقوق محفوظة لدى الـمــكــلا تـيلـيـكـوم 2026
 </footer>
 
-<!-- نافذة الصور -->
+<!-- نافذة عرض الصور -->
 <div id="imageModal" class="image-modal">
   <span class="close-btn" onclick="closeImage()">✕</span>
-  <img id="modalImg">
+  <span class="nav prev" onclick="changeImage(-1)">‹</span>
+  <img id="modalImg" alt="">
+  <span class="nav next" onclick="changeImage(1)">›</span>
 </div>
 
 <script src="app.js"></script>
 </body>
 </html>
-
