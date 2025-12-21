@@ -75,7 +75,7 @@ function downloadModernAPK(){
 function downloadAPK(url){
   loader.style.display = "flex";
   loaderPercent.textContent = "0%";
-  loaderSpeed.textContent = "0 KB/s";
+  loaderSpeed.textContent = "0.00 MB/s";
   slowMsg.style.display = "none";
 
   const xhr = new XMLHttpRequest();
@@ -91,9 +91,15 @@ function downloadAPK(url){
       loaderPercent.textContent = percent + "%";
 
       const now = Date.now();
-      const speed = (e.loaded - lastLoaded) / ((now - lastTime) / 1000);
-      const kb = speed / 1024;
+const speed = (e.loaded - lastLoaded) / ((now - lastTime) / 1000);
 
+// التحويل إلى MB/s فقط
+const speedMB = speed / (1024 * 1024);
+
+loaderSpeed.textContent = speedMB.toFixed(2) + " MB/s";
+
+lastLoaded = e.loaded;
+lastTime = now;
       loaderSpeed.textContent =
         kb > 1024
           ? (kb / 1024).toFixed(2) + " MB/s"
@@ -154,3 +160,4 @@ function changeImage(step){
 
   modalImg.src = images[currentImage].src;
     }
+
