@@ -1,131 +1,214 @@
-:root{
-  --main:#2096ED;
-  --bg:#f8fbff;
-  --text:#0f172a;
+:root {
+    --primary-color: #2096ED;
+    --bg-dark: #121212;
+    --bg-light: #f4f7f6;
+    --card-dark: #1e1e1e;
+    --card-light: #ffffff;
+    --text-dark: #ffffff;
+    --text-light: #333333;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body.dark{
-  --bg:#0f172a;
-  --text:#ffffff;
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: var(--transition);
+    overflow-x: hidden;
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
 }
 
-*{
-  box-sizing:border-box;
-  font-family:'Cairo',sans-serif;
+body.light-mode {
+    background-color: var(--bg-light);
+    color: var(--text-light);
 }
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  text-align:center;
-  overflow-x:hidden;
-  transition:.4s;
+/* الدوائر المتطايرة */
+.circles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
 
-/* ================== دوائر متطايرة ================== */
-.circles{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-}
-.circles li{
-  position:absolute;
-  background:rgba(32,150,237,0.25);
-  border-radius:50%;
-  animation:float 12s linear infinite;
-  bottom:-150px;
-}
-.circles li:nth-child(1){left:5%;width:40px;height:40px}
-.circles li:nth-child(2){left:15%;width:90px;height:90px}
-.circles li:nth-child(3){left:30%;width:25px;height:25px}
-.circles li:nth-child(4){left:45%;width:70px;height:70px}
-.circles li:nth-child(5){left:60%;width:110px;height:110px}
-.circles li:nth-child(6){left:70%;width:35px;height:35px}
-.circles li:nth-child(7){left:80%;width:80px;height:80px}
-.circles li:nth-child(8){left:90%;width:45px;height:45px}
-.circles li:nth-child(9){left:50%;width:60px;height:60px}
-
-@keyframes float{
-  to{
-    transform:translateY(-1100px) rotate(360deg);
-    opacity:0;
-  }
+.circle {
+    position: absolute;
+    background: var(--primary-color);
+    border-radius: 50%;
+    opacity: 0.15;
+    animation: float 15s infinite linear;
 }
 
-/* ================== Header ================== */
-header{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  padding:25px;
-}
-.logo{
-  width:90px;
-  height:90px;
-  border-radius:24px;
-  box-shadow:0 15px 35px rgba(32,150,237,.5);
-  transition:.4s;
-}
-.logo:hover{
-  transform:rotate(-3deg) scale(1.08);
+@keyframes float {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    50% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
 }
 
-.version{
-  font-size:18px;
+/* الهيدر */
+header {
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-/* ================== زر الوضع ================== */
-.switch{
-  margin-inline-start:auto;
-  width:48px;
-  height:26px;
-  position:relative;
-}
-.switch input{
-  display:none;
-}
-.switch-btn{
-  position:absolute;
-  inset:0;
-  background:#ccc;
-  border-radius:30px;
-  cursor:pointer;
-}
-.switch-btn::before{
-  content:"";
-  position:absolute;
-  width:20px;
-  height:20px;
-  background:#fff;
-  border-radius:50%;
-  left:3px;
-  top:3px;
-  transition:.3s;
-}
-input:checked + .switch-btn{
-  background:var(--main);
-}
-input:checked + .switch-btn::before{
-  transform:translateX(22px);
+.logo-area { display: flex; align-items: center; gap: 12px; }
+
+.logo-container {
+    position: relative;
+    width: 55px;
+    height: 55px;
 }
 
-/* ================== Main ================== */
-.main-title{
-  font-size:28px;
-  color:var(--main);
-}
-.subtitle{
-  opacity:.75;
-  margin-bottom:25px;
+.logo-container img {
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 
-/* ================== زر التحميل ================== */
-.btn{
-  display:inline-block;
-  padding:18px 36px;
-  background:linear-gradient(135deg,#2096ED,#4fb4ff);
-  color:#fff;
+/* حلقة التحميل حول الشعار */
+.logo-ring {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 63px;
+    height: 63px;
+    border: 3px solid transparent;
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    display: none;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* المحتوى */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+h1 { font-size: 2.8rem; margin-bottom: 10px; text-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+.slogan { 
+    max-width: 600px; 
+    margin: 0 auto 40px; 
+    line-height: 1.6; 
+    opacity: 0.85; 
+}
+
+/* الأزرار */
+.download-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 16px 40px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 8px 20px rgba(32, 150, 237, 0.3);
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(32, 150, 237, 0.5); }
+
+.btn-web { background-color: #333; }
+
+/* بطاقة التحميل */
+.download-card {
+    display: none;
+    background: var(--card-dark);
+    padding: 20px;
+    border-radius: 15px;
+    width: 320px;
+    margin-top: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.light-mode .download-card { 
+    background: var(--card-light); 
+    color: #333; 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+}
+
+.card-header { display: flex; align-items: center; gap: 15px; text-align: right; }
+.android-icon { font-size: 2.5rem; color: #3DDC84; }
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #333;
+    border-radius: 10px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--primary-color);
+}
+
+.progress-stats { display: flex; justify-content: space-between; font-size: 0.85rem; }
+
+/* الصور */
+.app-previews {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 60px 0;
+    flex-wrap: wrap;
+}
+
+.preview-img {
+    width: 200px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    transition: var(--transition);
+    border: 3px solid rgba(32, 150, 237, 0.1);
+}
+
+.preview-img:hover { transform: scale(1.05) rotate(2deg); }
+
+footer {
+    padding: 50px 20px;
+    background: rgba(0,0,0,0.3);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    font-size: 1.4rem;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: inherit;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    transition: var(--transition);
+}
   border-radius:26px;
   font-size:18px;
   margin:10px;
@@ -298,3 +381,4 @@ input:checked + .switch-btn::before{
 @keyframes spin{
   to{ transform:rotate(360deg); }
 }
+
