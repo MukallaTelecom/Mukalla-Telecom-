@@ -239,3 +239,62 @@ input:checked + .switch-btn::before{
     opacity:.15;
   }
   }
+
+/* =======================
+   Loader مع شعار في الوسط
+======================= */
+
+.loader-box{
+  position:relative;
+  background:rgba(0,0,0,0.55);
+  padding:30px 35px;
+  border-radius:22px;
+  text-align:center;
+  backdrop-filter:blur(12px);
+}
+
+.loader-circle-wrapper{
+  position:relative;
+  width:120px;
+  height:120px;
+  margin:0 auto 15px;
+}
+
+/* الدائرة */
+.loader-circle{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:6px solid rgba(255,255,255,0.25);
+  border-top-color:#2096ED;
+  animation:spin 1.2s linear infinite;
+}
+
+/* شعار التطبيق */
+.loader-logo{
+  position:absolute;
+  inset:0;
+  margin:auto;
+  width:55px;
+  height:55px;
+  border-radius:14px;
+  background:#fff;
+  padding:6px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* النص */
+#loaderPercent{
+  font-size:20px;
+  font-weight:700;
+  margin-top:6px;
+}
+
+#loaderSpeed{
+  font-size:15px;
+  opacity:.85;
+}
+
+@keyframes spin{
+  to{ transform:rotate(360deg); }
+}
