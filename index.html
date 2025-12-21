@@ -9,48 +9,71 @@
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="dark">
 
 <!-- دوائر متطايرة -->
 <ul class="circles">
-  <li></li><li></li><li></li><li></li>
-  <li></li><li></li><li></li><li></li>
+  <li></li><li></li><li></li><li></li><li></li>
+  <li></li><li></li><li></li>
 </ul>
 
 <header>
-  <img src="logo.png" class="logo">
+  <div class="logo-wrap">
+    <img src="logo.png" class="logo" id="appLogo">
+  </div>
 
   <div class="title">
     <h1>المكلا تيليكوم</h1>
-    <span class="version">الإصدار 921</span>
+    <span class="version">الإصدار <strong id="appVersion">921</strong></span>
   </div>
 
   <!-- زر الوضع -->
   <label class="switch">
-    <input type="checkbox" id="themeToggle">
+    <input type="checkbox" id="themeToggle" checked>
     <span class="switch-btn"></span>
   </label>
 </header>
 
 <main>
-  <h2 class="main-title">تحميل التطبيق</h2>
-  <p class="subtitle">سيتم اختيار النسخة المناسبة تلقائيًا</p>
+  <h2>تحميل التطبيق</h2>
+  <p id="deviceText">سيتم اختيار النسخة المناسبة تلقائيًا</p>
 
-  <div class="download-box">
-    <a id="apkBtn" class="btn" style="display:none">تحميل التطبيق</a>
+  <!-- زر ذكي -->
+  <button id="downloadBtn" class="btn">
+    تحميل التطبيق
+  </button>
 
-    <a id="webApp" class="btn" href="https://almukallaw.yemoney.net/"
-       target="_blank" style="display:none">
-      تشغيل تطبيق الويب
-    </a>
+  <!-- عداد تحميل -->
+  <div id="progressBox" class="progress-box">
+    <div class="progress-bar">
+      <div id="progressFill"></div>
+    </div>
+    <span id="progressPercent">0%</span>
   </div>
+
+  <!-- بطاقة معلومات -->
+  <div class="info-card">
+    <div class="android-icon">🤖</div>
+    <div class="info-text">
+      <div id="fileName">almukalla-telecom.apk</div>
+      <div class="meta">
+        <span>الإصدار: 921</span> •
+        <span id="fileSize">— MB</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- زر الويب -->
+  <a id="webBtn" class="btn web-btn" target="_blank">
+    تشغيل تطبيق الويب
+  </a>
 
   <!-- صور التطبيق -->
   <div class="gallery">
-    <img src="screen1.png">
-    <img src="screen2.png">
-    <img src="screen3.png">
-    <img src="screen4.png">
+    <img src="screen1.png" onclick="openImage(0)">
+    <img src="screen2.png" onclick="openImage(1)">
+    <img src="screen3.png" onclick="openImage(2)">
+    <img src="screen4.png" onclick="openImage(3)">
   </div>
 
   <div class="contact">
@@ -62,6 +85,13 @@
   جميع الحقوق محفوظة © المكلا تيليكوم 2026
 </footer>
 
+<!-- نافذة الصور -->
+<div id="imageModal" class="image-modal">
+  <span class="close-btn" onclick="closeImage()">✕</span>
+  <img id="modalImg">
+</div>
+
 <script src="app.js"></script>
 </body>
-  </html>
+</html>
+
